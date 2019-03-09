@@ -21,7 +21,7 @@ socket.on('newLocationMessage', msg =>{
 
     let li = $('<li></li>');
     let a = $('<a target="_blank">My Current Location: </a>'); 
-    li.text(`${msg.from}: `);
+    li.text(`${msg.from} `);
     a.attr('href', msg.url);
     li.append(a);
     $('#messages').append(li);
@@ -29,19 +29,25 @@ socket.on('newLocationMessage', msg =>{
 
 $('#msgForm').on('submit', evt => {
     evt.preventDefault();
-
+    let input = $('input[name="message"');
     socket.emit('createMessage', {
         from: 'User',
-        text: $('input[name="message"').val()
+        text: input.val()
+    }, () => {
+        input.val('');
     });
 });
 
-$('#location').on('click', () => {
+let locationBtn = $('#location');
+locationBtn.on('click', () => {
     if(!navigator.geolocation){
         return alert('Your browser does not support GeoLocation API');
     }
 
+    locationBtn.attr('disabled', 'disabled').text('Sending...');
+
     navigator.geolocation.getCurrentPosition( function(position){
+        locationBtn.removeAttr('disabled').text('Send Location');
         socket.emit('createLocationMessage', {
             from: 'User',
             lat: position.coords.latitude,
@@ -49,5 +55,6 @@ $('#location').on('click', () => {
         });
     }, () => {
         alert('Unable to fetch the coordinates!. ');
+        locationBtn.removeAttr('disabled').text('Send Location');
     });
 });
