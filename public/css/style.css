@@ -130,6 +130,12 @@ button:disabled {
   color: #999;
 }
 
+.nav-link{
+  text-decoration: none;
+  color: rgb(29, 105, 94);
+  font-weight: 600;
+}
+
 @media (max-width: 600px) {
   * {
     font-size: 1rem;
