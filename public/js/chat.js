@@ -16,7 +16,16 @@ function scrollToBottom() {
 }
 
 socket.on('connect', () => {
-    console.log('Connected to Sever');
+    let params = $.deparam(window.location.search);
+    socket.emit('joinRoom', params, function(err){
+        if(err){
+            alert(err);  
+            window.location.href = '/';
+        }
+        else{
+            console.log('No error');
+        }
+    })
 });
 
 socket.on('disconnect', () => {
@@ -47,6 +56,16 @@ socket.on('newLocationMessage', msg => {
 
     $('#messages').append(html);
     scrollToBottom();
+});
+
+socket.on('updatedUsersList', users => {
+    let ol = $('<ol></ol>');
+
+    users.forEach(user => {
+        ol.append($('<li></li>').text(user));
+    });
+
+    $('#users').html(ol);
 });
 
 $('#msgForm').on('submit', evt => {

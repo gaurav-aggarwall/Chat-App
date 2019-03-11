@@ -84,8 +84,7 @@ button:disabled {
 }
 
 .chat__sidebar {
-  overflow-y: hidden;
-  display: inline-flex;
+  overflow-y: scroll;
   width: 260px;
   height: 100vh;
   background: -moz-linear-gradient(125deg, rgb(67, 170, 155) 0%, rgb(29, 105, 94) 100%); /* ff3.6+ */
