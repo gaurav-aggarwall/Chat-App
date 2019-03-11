@@ -72,7 +72,6 @@ $('#msgForm').on('submit', evt => {
     evt.preventDefault();
     let input = $('input[name="message"');
     socket.emit('createMessage', {
-        from: 'User',
         text: input.val()
     }, () => {
         input.val('');
