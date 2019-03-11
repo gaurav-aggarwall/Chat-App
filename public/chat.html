@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Chatters</title>
+    <link rel="icon" href="./img/favicon.ico">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
+</head>    
+<body class='chat'>
+
+    <!-- SIDEBAR -->
+    <div class="chat__sidebar">
+        <h3>Users</h3>
+        <div id="users"></div>
+    </div>
+    
+    <!-- MESSAGES AREA -->
+    <div class="chat__main">
+        <ul id='messages' class='chat__messages'></ul>
+
+        <!-- CHAT INPUT FORM -->
+        <div class="chat__footer">
+            <form id='msgForm'>
+                <input type='text' name='message' placeholder='Enter Message'autofocus autocomplete="off"/>
+                <button>Submit</button>
+            </form>
+            <button id='location'>Send Location</button>
+        </div>      
+    </div>
+
+
+    <!-- TEMPLATES -->
+
+    <!-- MESSAGE TEMPLATE -->
+    <script id='message-template' type='text/template'>
+        <li class="message">
+            <div class="message__title">
+                <h4>{{from}}</h4>
+                <span>{{createdAt}}</span>
+            </div>
+            <div class="message__body">
+                <p>{{text}}</p>
+            </div>
+        </li>    
+    </script>
+
+    <!-- LOCATION MESSAGE TEMPLATE -->
+    <script id='location-message-template' type='text/template'>
+        <li class="message">
+            <div class="message__title">
+                <h4>{{from}}</h4>
+                <span>{{createdAt}}</span>
+            </div>
+            <div class="message__body">
+                <a class="nav-link" href="{{url}}" target="_blank"><i class="fas fa-map-marker-alt"></i> Location</a>
+            </div>
+        </li>    
+    </script>
+
+    <!-- UTILITY SCRIPTS -->
+    <script src="js/libs/jquery-min.js"></script>
+    <script src="js/libs/moment.js"></script>
+    <script src="js/libs/mustache.js"></script>
+
+    <!-- SOCKET IO SCRIPT -->
+    <script src="/socket.io/socket.io.js"></script>
+    
+    <!-- MAIN SCRIPT -->
+    <script src="js/chat.js"></script>
+</body>    
+</html>
