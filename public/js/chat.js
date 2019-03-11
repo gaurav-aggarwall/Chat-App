@@ -22,9 +22,6 @@ socket.on('connect', () => {
             alert(err);  
             window.location.href = '/';
         }
-        else{
-            console.log('No error');
-        }
     })
 });
 
