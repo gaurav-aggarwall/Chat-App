@@ -19,18 +19,28 @@ let users = new Users();
 
 io.on('connect', (socket) => {
     socket.on('joinRoom', (params, callback) => {
-        if(!isString(params.name)){
+        var param = {
+            ...params,
+            room: params.room.toLowerCase(),
+            name: params.name.toLowerCase()
+        }
+        if(!isString(param.name)){
             return callback('Display Name can not be empty');
-        }else if(!isString(params.room)){
+        }else if(!isString(param.room)){
             return callback('Room Name can not be empty');
         }else{
-            socket.join(params.room);
+            socket.join(param.room);
             users.removeUser(socket.id);
-            users.addUser(socket.id, params.name, params.room);
 
-            io.to(params.room).emit('updatedUsersList', users.getUsersList(params.room));
-            socket.emit('newMessage', msgGenerator('Admin', 'Welcome to the Chat App'));
-            socket.broadcast.to(params.room).emit('newMessage', msgGenerator('Admin', `${params.name} has joined.`));
+            if(users.getUserByName(param.name)){
+                return callback(`${param.name} is already taken.`);
+            }
+
+            users.addUser(socket.id, param.name, param.room);
+
+            io.to(param.room).emit('updatedUsersList', users.getUsersList(param.room));
+            socket.emit('newMessage', msgGenerator('Admin', `Welcome to ${param.room}`));
+            socket.broadcast.to(param.room).emit('newMessage', msgGenerator('Admin', `${param.name} has joined.`));
 
             callback();
         }
